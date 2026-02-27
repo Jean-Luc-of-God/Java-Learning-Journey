@@ -4,11 +4,27 @@ public abstract class PaymentMethod {
     private String cardId;
     private String cardOwner;
     private double amount;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public PaymentMethod(String cardId, String cardOwner, double amount) {
-        this.cardId = cardId;
-        this.cardOwner = cardOwner;
-        this.amount = amount;
+
+        setCardId(cardId);
+        setCardOwner(cardOwner);
+        try{
+            setAmount(amount);
+
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            System.out.println("Invalid amount");
+        }
     }
 
     public double getAmount() {
@@ -16,6 +32,10 @@ public abstract class PaymentMethod {
     }
 
     public void setAmount(double amount) {
+        if(amount <0 ){
+
+            throw new IllegalArgumentException("The amount to deposit can not be negative");
+        }
         this.amount = amount;
     }
 
