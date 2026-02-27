@@ -44,6 +44,7 @@ public class PayApp {
                         sc.nextLine();
                         PaymentMethod payment = new PayPal(owner,cardNUmber,amount);
                         payments.add(payment);
+                        System.out.println(payment.processPayment(payment.getAmount()));
                         //(String owner,String cardNumber,double amount)
                     }
 
@@ -57,6 +58,7 @@ public class PayApp {
                         sc.nextLine();
                         PaymentMethod payment = new CreditCard(owner,cardNUmber,amount);
                         payments.add(payment);
+                        System.out.println(payment.processPayment(payment.getAmount()));
                     }
 
                     if (choice == 3){
@@ -69,6 +71,7 @@ public class PayApp {
                         sc.nextLine();
                         PaymentMethod payment = new MobileMoney(owner,cardNUmber,amount);
                         payments.add(payment);
+                        System.out.println(payment.processPayment(payment.getAmount()));
                     }
                     break;
                 }
@@ -76,58 +79,31 @@ public class PayApp {
 
 
                 case 2 ->{
-                    System.out.println("CHOOSE YOUR CARD");
-                    System.out.println("1.PayPal");
-                    System.out.println("2.Credit Card");
-                    System.out.println("3.Mobile Money");
-                    System.out.println("-----------------------------");
-                    System.out.print("Choice: ");
-                    int select = sc.nextInt();
-                    sc.nextLine();
+                    System.out.print("Enter your card number: ");
+                    String cardNumber = sc.nextLine();
 
-                    if (select == 1){
+                    boolean found = false;
 
-                        System.out.print("Enter your card number: ");
-                        String cardNumber = sc.nextLine();
-
-                        for (PaymentMethod payment : payments) {
-                            if (payment instanceof PayPal && Objects.equals(payment.getCardId(), cardNumber)){
-                                System.out.println(payment);
-                            }
-
+                    for (PaymentMethod payment : payments) {
+                        if (payment.getCardId().equals(cardNumber)) {
+                            System.out.println(payment);
+                            found = true;
                         }
+
                     }
-
-                    if (select == 2){
-                        System.out.print("Enter your card number: ");
-                        String cardNumber = sc.nextLine();
-
-                        for (PaymentMethod payment : payments) {
-                            if (payment instanceof CreditCard && Objects.equals(payment.getCardId(), cardNumber)){
-                                System.out.println(payment);
-                            }
-
-                        }
-                    }
-
-                    if (select == 3){
-
-                        System.out.print("Enter your card number: ");
-                        String cardNumber = sc.nextLine();
-
-
-                        for (PaymentMethod payment : payments) {
-                            if (payment instanceof MobileMoney && payment.getCardId().equals(cardNumber)){
-                                System.out.println(payment);
-                            }
-
-
-                        }
+                    if(!found){
+                        System.out.println("The card number you provided could not be found");
                     }
 
 
 
                     break;
+                }
+
+
+                case 0 ->{
+                    System.out.println("Thank you for using Jean Luc's BANK, exiting....");
+                    running = false;
                 }
             }
         }
