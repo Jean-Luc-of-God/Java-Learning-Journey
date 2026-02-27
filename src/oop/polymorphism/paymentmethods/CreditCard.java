@@ -4,9 +4,9 @@ public class CreditCard extends PaymentMethod{
     @Override
     public String processPayment(double amount) {
 
-        while(amount <0 ){
+        if(amount <0 ){
 
-            return "Can not process a negative amount!";
+            throw new IllegalArgumentException("Can not process negative amount!");
         }
 
         return "Processed payment with Credit Card ";
@@ -17,6 +17,6 @@ public class CreditCard extends PaymentMethod{
     }
     @Override
     public String toString() {
-        return "Owner name: "+getCardOwner()+" || "+"Card Number: "+getCardId() + " || " + "Amount: "+getAmount();
+        return "Owner name: "+getCardOwner()+" || "+"Card Number: "+getCardId() + " || " + "Type: Credit Card" + " || " + "Amount: "+getAmount();
     }
 }
